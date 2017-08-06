@@ -16,9 +16,14 @@ import (
 	_ "image/png"
 )
 
+const (
+	ttf  = "/usr/share/fonts/truetype/roboto/Roboto-Bold.ttf"
+	text = "Lorem ipsum!"
+)
+
 func TestPlaceholder(t *testing.T) {
 	gen, err := NewImageGenerator(Options{
-		TTFPath:     "/usr/share/fonts/truetype/roboto/Roboto-Bold.ttf",
+		TTFPath:     ttf,
 		MarginRatio: 0.2,
 		Foreground:  color.RGBA{0x96, 0x96, 0x96, 0xff},
 		Background:  color.RGBA{0xcc, 0xcc, 0xcc, 0xff},
@@ -28,7 +33,7 @@ func TestPlaceholder(t *testing.T) {
 		return
 	}
 
-	img, err := gen.NewPlaceholder("Lorem ipsum!", 400, 200)
+	img, err := gen.NewPlaceholder(text, 400, 200)
 	if err != nil {
 		t.Error(err)
 		return
@@ -70,5 +75,32 @@ func TestPlaceholder(t *testing.T) {
 	}
 }
 
+func TestErrors(t *testing.T) {
+	gen, _ := NewImageGenerator(Options{
+		TTFPath: ttf,
+	})
+
+	e := "Expected an error for invalid image dimensions, but received"
+	_, err := gen.NewPlaceholder(text, 0, 0)
+	if err != ErrInvalidDimensions {
+		t.Error(e, err)
+	}
+	_, err = gen.NewPlaceholder(text, -1, 0)
+	if err != ErrInvalidDimensions {
+		t.Error(e, err)
+	}
+	_, err = gen.NewPlaceholder(text, 0, -1)
+	if err != ErrInvalidDimensions {
+		t.Error(e, err)
+	}
+}
+
 func BenchmarkPlaceholder(b *testing.B) {
+	gen, _ := NewImageGenerator(Options{
+		TTFPath: ttf,
+	})
+
+	for n := 0; n < b.N; n++ {
+		gen.NewPlaceholder(text, 400, 200)
+	}
 }
