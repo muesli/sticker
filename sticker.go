@@ -1,5 +1,5 @@
 /*
- * crunchy - find common flaws in passwords
+ * sticker - a Golang lib to generate placeholder images with text
  *     Copyright (c) 2017, Christian Muehlhaeuser <muesli@gmail.com>
  *
  *   For license see LICENSE

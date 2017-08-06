@@ -25,7 +25,7 @@ gen, err := sticker.NewImageGenerator(sticker.Options{
     Foreground:  color.RGBA{0x96, 0x96, 0x96, 0xff},
     Background:  color.RGBA{0xcc, 0xcc, 0xcc, 0xff},
 })
-img, err := ph.NewPlaceholder("Lorem ipsum!", 400, 200)
+img, err := gen.NewPlaceholder("Lorem ipsum!", 400, 200)
 ...
 ```
 
