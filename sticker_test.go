@@ -18,7 +18,7 @@ import (
 
 func TestPlaceholder(t *testing.T) {
 	gen, err := NewImageGenerator(Options{
-		TTFPath:     "/usr/share/fonts/TTF/Roboto-Bold.ttf",
+		TTFPath:     "/usr/share/fonts/truetype/roboto/Roboto-Bold.ttf",
 		MarginRatio: 0.2,
 		Foreground:  color.RGBA{0x96, 0x96, 0x96, 0xff},
 		Background:  color.RGBA{0xcc, 0xcc, 0xcc, 0xff},
