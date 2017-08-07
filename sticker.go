@@ -113,7 +113,7 @@ func (p *ImageGenerator) NewPlaceholder(text string, width, height int) (image.I
 			int(float64(width)*(1.0-p.options.MarginRatio)),
 			int(float64(height)*(1.0-p.options.MarginRatio)))
 
-		actheight := c.PointToFixed(fontsize/2.2) / 64
+		actheight := c.PointToFixed(fontsize/2.0) / 64
 		xcenter := (float64(width) / 2.0) - (float64(actwidth) / 2.0)
 		ycenter := (float64(height) / 2.0) + (float64(actheight) / 2.0)
 
