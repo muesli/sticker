@@ -103,7 +103,7 @@ func (p *ImageGenerator) NewPlaceholder(text string, width, height int) (image.I
 	c.SetHinting(font.HintingNone)
 
 	// draw with scaled fontsize to get the real text extent
-	fontsize, actwidth := maxPointSize(text, p.font, c, img,
+	fontsize, actwidth := maxPointSize(text, c,
 		int(float64(width)*(1.0-p.options.MarginRatio)),
 		int(float64(height)*(1.0-p.options.MarginRatio)))
 
@@ -135,7 +135,7 @@ func (p *ImageGenerator) NewPlaceholder(text string, width, height int) (image.I
 
 // maxPointSize returns the maximum point size we can use to fit text inside width and height
 // as well as the resulting text-width in pixels
-func maxPointSize(text string, f *truetype.Font, c *freetype.Context, img image.Image, width, height int) (float64, int) {
+func maxPointSize(text string, c *freetype.Context, width, height int) (float64, int) {
 	// never let the font size exceed the requested height
 	fontsize := maxFontSize
 	for int(c.PointToFixed(fontsize)/64) > height {
