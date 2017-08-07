@@ -13,7 +13,6 @@ import (
 	"image/color"
 	"image/draw"
 	"io/ioutil"
-	"strconv"
 
 	"github.com/disintegration/imaging"
 	"github.com/golang/freetype"
@@ -73,8 +72,7 @@ func NewImageGenerator(options Options) (*ImageGenerator, error) {
 	}, nil
 }
 
-// NewPlaceholder returns a placeholder image with the given text or, if text was
-// an empty string, with the image bounds in the form "800x600".
+// NewPlaceholder returns a placeholder image with the given text, width & height
 func (p *ImageGenerator) NewPlaceholder(text string, width, height int) (image.Image, error) {
 	if width < 0 || height < 0 {
 		return nil, ErrInvalidDimensions
@@ -88,9 +86,6 @@ func (p *ImageGenerator) NewPlaceholder(text string, width, height int) (image.I
 	} else if height == 0 {
 		height = width
 	}
-	if text == "" {
-		text = strconv.Itoa(width) + " x " + strconv.Itoa(height)
-	}
 
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 
@@ -102,15 +97,6 @@ func (p *ImageGenerator) NewPlaceholder(text string, width, height int) (image.I
 	c.SetClip(img.Bounds())
 	c.SetHinting(font.HintingNone)
 
-	// draw with scaled fontsize to get the real text extent
-	fontsize, actwidth := maxPointSize(text, c,
-		int(float64(width)*(1.0-p.options.MarginRatio)),
-		int(float64(height)*(1.0-p.options.MarginRatio)))
-
-	actheight := c.PointToFixed(fontsize/2.2) / 64
-	xcenter := (float64(width) / 2.0) - (float64(actwidth) / 2.0)
-	ycenter := (float64(height) / 2.0) + (float64(actheight) / 2.0)
-
 	// draw the background
 	if p.options.BackgroundImage != nil {
 		// draw background image
@@ -121,13 +107,23 @@ func (p *ImageGenerator) NewPlaceholder(text string, width, height int) (image.I
 		draw.Draw(img, img.Bounds(), image.NewUniform(p.options.Background), image.ZP, draw.Src)
 	}
 
-	// draw the text
-	c.SetFontSize(fontsize)
-	c.SetSrc(image.NewUniform(p.options.Foreground))
-	c.SetDst(img)
-	_, err := c.DrawString(text, freetype.Pt(int(xcenter), int(ycenter)))
-	if err != nil {
-		return nil, err
+	if text != "" {
+		// draw with scaled fontsize to get the real text extent
+		fontsize, actwidth := maxPointSize(text, c,
+			int(float64(width)*(1.0-p.options.MarginRatio)),
+			int(float64(height)*(1.0-p.options.MarginRatio)))
+
+		actheight := c.PointToFixed(fontsize/2.2) / 64
+		xcenter := (float64(width) / 2.0) - (float64(actwidth) / 2.0)
+		ycenter := (float64(height) / 2.0) + (float64(actheight) / 2.0)
+
+		// draw the text
+		c.SetFontSize(fontsize)
+		c.SetSrc(image.NewUniform(p.options.Foreground))
+		_, err := c.DrawString(text, freetype.Pt(int(xcenter), int(ycenter)))
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return img, nil
