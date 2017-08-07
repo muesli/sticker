@@ -32,6 +32,8 @@ img, err := gen.NewPlaceholder("Lorem ipsum!", 400, 200)
 
 ![example placeholder](example/lorem.png) ![example placeholder with background image](example/motivation.png)
 
+sticker will automatically pick a suitable font size, so the text will always fit neatly inside the image.
+
 If you supply a background image, it will automatically be cropped and scaled (while maintaining its original aspect ratio) to the desired output size.
 
 ## Development
