@@ -98,13 +98,11 @@ func (p *ImageGenerator) NewPlaceholder(text string, width, height int) (image.I
 	c.SetHinting(font.HintingNone)
 
 	// draw the background
+	draw.Draw(img, img.Bounds(), image.NewUniform(p.options.Background), image.ZP, draw.Src)
+	// draw background image
 	if p.options.BackgroundImage != nil {
-		// draw background image
 		bgimg := imaging.Fill(p.options.BackgroundImage, width, height, imaging.Center, imaging.Lanczos)
 		draw.Draw(img, img.Bounds(), bgimg, image.ZP, draw.Src)
-	} else {
-		// draw a solid background
-		draw.Draw(img, img.Bounds(), image.NewUniform(p.options.Background), image.ZP, draw.Src)
 	}
 
 	if text != "" {
