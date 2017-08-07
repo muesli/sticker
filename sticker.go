@@ -15,6 +15,7 @@ import (
 	"io/ioutil"
 	"strconv"
 
+	"github.com/disintegration/imaging"
 	"github.com/golang/freetype"
 	"github.com/golang/freetype/truetype"
 	"golang.org/x/image/font"
@@ -33,10 +34,11 @@ type ImageGenerator struct {
 
 // Options contains all the settings for an ImageGenerator
 type Options struct {
-	TTFPath     string
-	Foreground  color.RGBA
-	Background  color.RGBA
-	MarginRatio float64
+	TTFPath         string
+	Foreground      color.RGBA
+	Background      color.RGBA
+	BackgroundImage image.Image
+	MarginRatio     float64
 }
 
 var (
@@ -110,7 +112,14 @@ func (p *ImageGenerator) NewPlaceholder(text string, width, height int) (image.I
 	ycenter := (float64(height) / 2.0) + (float64(actheight) / 2.0)
 
 	// draw the background
-	draw.Draw(img, img.Bounds(), image.NewUniform(p.options.Background), image.ZP, draw.Src)
+	if p.options.BackgroundImage != nil {
+		// draw background image
+		bgimg := imaging.Fill(p.options.BackgroundImage, width, height, imaging.Center, imaging.Lanczos)
+		draw.Draw(img, img.Bounds(), bgimg, image.ZP, draw.Src)
+	} else {
+		// draw a solid background
+		draw.Draw(img, img.Bounds(), image.NewUniform(p.options.Background), image.ZP, draw.Src)
+	}
 
 	// draw the text
 	c.SetFontSize(fontsize)
