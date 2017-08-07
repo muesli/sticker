@@ -30,7 +30,7 @@ img, err := gen.NewPlaceholder("Lorem ipsum!", 400, 200)
 ...
 ```
 
-![example placeholder](example/lorem.png)
+![example placeholder](example/lorem.png) ![example placeholder with background image](example/motivation.png)
 
 ## Development
 
