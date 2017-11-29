@@ -39,8 +39,7 @@ If you supply a background image, it will automatically be cropped and scaled (w
 
 ## Development
 
-API docs can be found [here](http://godoc.org/github.com/muesli/sticker).
-
+[![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](https://godoc.org/github.com/muesli/sticker)
 [![Build Status](https://travis-ci.org/muesli/sticker.svg?branch=master)](https://travis-ci.org/muesli/sticker)
 [![Coverage Status](https://coveralls.io/repos/github/muesli/sticker/badge.svg?branch=master)](https://coveralls.io/github/muesli/sticker?branch=master)
 [![Go ReportCard](http://goreportcard.com/badge/muesli/sticker)](http://goreportcard.com/report/muesli/sticker)
