@@ -5,7 +5,7 @@ A Golang lib to generate placeholder images with text.
 
 ## Installation
 
-Make sure you have a working Go environment (Go 1.2 or higher is required).
+Make sure you have a working Go environment (Go 1.4 or higher is required).
 See the [install instructions](http://golang.org/doc/install.html).
 
 To install sticker, simply run:
