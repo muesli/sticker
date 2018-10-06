@@ -34,6 +34,7 @@ type ImageGenerator struct {
 // Options contains all the settings for an ImageGenerator
 type Options struct {
 	TTFPath         string
+	TTF             []byte
 	Foreground      color.RGBA
 	Background      color.RGBA
 	BackgroundImage image.Image
@@ -57,10 +58,22 @@ func NewImageGenerator(options Options) (*ImageGenerator, error) {
 		options.MarginRatio = 0.2
 	}
 
-	ttf, err := ioutil.ReadFile(options.TTFPath)
-	if err != nil {
-		return nil, err
+	var ttf []byte
+
+	if len(options.TTF) > 0 {
+		ttf = options.TTF
+	} else if options.TTFPath != "" {
+		var err error
+
+		ttf, err = ioutil.ReadFile(options.TTFPath)
+
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		return nil, errors.New("No font specified")
 	}
+
 	f, err := freetype.ParseFont(ttf)
 	if err != nil {
 		return nil, err
