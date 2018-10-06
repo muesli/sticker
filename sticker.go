@@ -45,8 +45,8 @@ var (
 	// ErrInvalidDimensions gets returned when the requested image has an invalid width or height
 	ErrInvalidDimensions = errors.New("values for width or height must be positive")
 
-	// ErrMissingFont gets returned when there's no font specified in the options
-	ErrMissingFont = errors.New("no font specified")
+	// ErrMissingFontOption gets returned when there's no font specified in the options
+	ErrMissingFontOption = errors.New("no font option specified")
 )
 
 // NewImageGenerator returns a new ImageGenerator
@@ -74,7 +74,7 @@ func NewImageGenerator(options Options) (*ImageGenerator, error) {
 			return nil, err
 		}
 	} else {
-		return nil, ErrMissingFont
+		return nil, ErrMissingFontOption
 	}
 
 	f, err := freetype.ParseFont(ttf)

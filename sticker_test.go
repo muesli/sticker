@@ -96,7 +96,7 @@ func TestImageGeneratorErrors(t *testing.T) {
 
 	_, err = NewImageGenerator(Options{})
 
-	if err != ErrMissingFont {
+	if err != ErrMissingFontOption {
 		t.Error("missing font error expected")
 	}
 }
