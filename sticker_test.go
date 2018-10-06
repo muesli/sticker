@@ -14,16 +14,17 @@ import (
 	"testing"
 
 	_ "image/png"
+
+	"golang.org/x/image/font/gofont/gobold"
 )
 
 const (
-	ttf  = "/usr/share/fonts/truetype/roboto/Roboto-Bold.ttf"
 	text = "Lorem ipsum!"
 )
 
 func TestPlaceholder(t *testing.T) {
 	gen, err := NewImageGenerator(Options{
-		TTFPath:     ttf,
+		TTF:         gobold.TTF,
 		MarginRatio: 0.2,
 		Foreground:  color.RGBA{0x96, 0x96, 0x96, 0xff},
 		Background:  color.RGBA{0xcc, 0xcc, 0xcc, 0xff},
@@ -77,7 +78,7 @@ func TestPlaceholder(t *testing.T) {
 
 func TestErrors(t *testing.T) {
 	gen, _ := NewImageGenerator(Options{
-		TTFPath: ttf,
+		TTF: gobold.TTF,
 	})
 
 	e := "Expected an error for invalid image dimensions, but received"
@@ -97,7 +98,7 @@ func TestErrors(t *testing.T) {
 
 func BenchmarkPlaceholder(b *testing.B) {
 	gen, _ := NewImageGenerator(Options{
-		TTFPath: ttf,
+		TTF: gobold.TTF,
 	})
 
 	for n := 0; n < b.N; n++ {
