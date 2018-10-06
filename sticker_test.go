@@ -19,6 +19,7 @@ import (
 )
 
 const (
+	ttf  = "/usr/share/fonts/truetype/roboto/Roboto-Bold.ttf"
 	text = "Lorem ipsum!"
 )
 
@@ -73,6 +74,30 @@ func TestPlaceholder(t *testing.T) {
 		// Roboto could have been updated or a newer freetype behaves different
 		// We account for this by allowing 1% of pixels to differ between the two images
 		t.Errorf("Expected generated image to match example/lorem.png, but it doesn't: %d pixel mismatches", errs)
+	}
+}
+
+func TestImageGeneratorErrors(t *testing.T) {
+	_, err := NewImageGenerator(Options{
+		TTF: gobold.TTF,
+	})
+
+	if err != nil {
+		t.Error("no error expected")
+	}
+
+	_, err = NewImageGenerator(Options{
+		TTFPath: ttf,
+	})
+
+	if err != nil && !os.IsNotExist(err) {
+		t.Error("no error expected")
+	}
+
+	_, err = NewImageGenerator(Options{})
+
+	if err != ErrMissingFont {
+		t.Error("missing font error expected")
 	}
 }
 
