@@ -83,7 +83,7 @@ func TestImageGeneratorErrors(t *testing.T) {
 	})
 
 	if err != nil {
-		t.Error("no error expected")
+		t.Error("no error expected", err)
 	}
 
 	_, err = NewImageGenerator(Options{
@@ -91,13 +91,13 @@ func TestImageGeneratorErrors(t *testing.T) {
 	})
 
 	if err != nil && !os.IsNotExist(err) {
-		t.Error("no error expected")
+		t.Error("no error expected", err)
 	}
 
 	_, err = NewImageGenerator(Options{})
 
 	if err != ErrMissingFontOption {
-		t.Error("missing font error expected")
+		t.Error("missing font error expected", err)
 	}
 }
 
