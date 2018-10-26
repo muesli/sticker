@@ -30,7 +30,17 @@ gen, err := sticker.NewImageGenerator(sticker.Options{
 img, err := gen.NewPlaceholder("Lorem ipsum!", 400, 200)
 ...
 ```
+You can also pass a `[]byte` containing the font:
+```go
+import "golang.org/x/image/font/gofont/gomono"
 
+gen, err := sticker.NewImageGenerator(sticker.Options{
+    TTF:             gomono.TTF,
+    MarginRatio:     0.2,
+    Foreground:      color.RGBA{0x96, 0x96, 0x96, 0xff},
+    Background:      color.RGBA{0xcc, 0xcc, 0xcc, 0xff},
+})
+```
 ![example placeholder](example/lorem.png) ![example placeholder with background image](example/motivation.png)
 
 sticker will automatically pick a suitable font size, so the text will always fit neatly inside the image.
