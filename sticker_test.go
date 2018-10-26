@@ -14,6 +14,8 @@ import (
 	"testing"
 
 	_ "image/png"
+
+	"golang.org/x/image/font/gofont/gobold"
 )
 
 const (
@@ -23,7 +25,7 @@ const (
 
 func TestPlaceholder(t *testing.T) {
 	gen, err := NewImageGenerator(Options{
-		TTFPath:     ttf,
+		TTF:         gobold.TTF,
 		MarginRatio: 0.2,
 		Foreground:  color.RGBA{0x96, 0x96, 0x96, 0xff},
 		Background:  color.RGBA{0xcc, 0xcc, 0xcc, 0xff},
@@ -75,9 +77,33 @@ func TestPlaceholder(t *testing.T) {
 	}
 }
 
+func TestImageGeneratorErrors(t *testing.T) {
+	_, err := NewImageGenerator(Options{
+		TTF: gobold.TTF,
+	})
+
+	if err != nil {
+		t.Error("no error expected")
+	}
+
+	_, err = NewImageGenerator(Options{
+		TTFPath: ttf,
+	})
+
+	if err != nil && !os.IsNotExist(err) {
+		t.Error("no error expected")
+	}
+
+	_, err = NewImageGenerator(Options{})
+
+	if err != ErrMissingFontOption {
+		t.Error("missing font error expected")
+	}
+}
+
 func TestErrors(t *testing.T) {
 	gen, _ := NewImageGenerator(Options{
-		TTFPath: ttf,
+		TTF: gobold.TTF,
 	})
 
 	e := "Expected an error for invalid image dimensions, but received"
@@ -97,7 +123,7 @@ func TestErrors(t *testing.T) {
 
 func BenchmarkPlaceholder(b *testing.B) {
 	gen, _ := NewImageGenerator(Options{
-		TTFPath: ttf,
+		TTF: gobold.TTF,
 	})
 
 	for n := 0; n < b.N; n++ {
