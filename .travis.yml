@@ -14,13 +14,9 @@ matrix:
   allow_failures:
     - go: tip
 
-  exclude:
-    - os: osx
-      go: 1.4
-    - os: osx
-      go: 1.5.x
-    - os: osx
-      go: 1.6.x
+env:
+  global:
+    GO111MODULE=on
 
 sudo: required
 before_install:
