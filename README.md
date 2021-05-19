@@ -6,7 +6,7 @@ A Golang lib to generate placeholder images with text.
 ## Installation
 
 Make sure you have a working Go environment (Go 1.9 or higher is required).
-See the [install instructions](http://golang.org/doc/install.html).
+See the [install instructions](https://golang.org/doc/install.html).
 
 To install sticker, simply run:
 
@@ -52,4 +52,4 @@ If you supply a background image, it will automatically be cropped and scaled (w
 [![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](https://godoc.org/github.com/muesli/sticker)
 [![Build Status](https://travis-ci.org/muesli/sticker.svg?branch=master)](https://travis-ci.org/muesli/sticker)
 [![Coverage Status](https://coveralls.io/repos/github/muesli/sticker/badge.svg?branch=master)](https://coveralls.io/github/muesli/sticker?branch=master)
-[![Go ReportCard](http://goreportcard.com/badge/muesli/sticker)](http://goreportcard.com/report/muesli/sticker)
+[![Go ReportCard](https://goreportcard.com/badge/muesli/sticker)](https://goreportcard.com/report/muesli/sticker)
